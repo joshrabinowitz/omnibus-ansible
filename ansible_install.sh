@@ -57,13 +57,14 @@ if [ ! "$(which ansible-playbook)" ]; then
     # One more time with EPEL to avoid failures
     yum_makecache_retry
 
-    yum -y install python-pip PyYAML python-jinja2 python-httplib2 python-keyczar python-paramiko git
+    # TO FIX - easy_install for python3 - joshr
+    yum -y install python3-pip PyYAML python3-jinja2 python3-httplib2 python3-keyczar python3-paramiko git
     # If python-pip install failed and setuptools exists, try that
-    if [ -z "$(which pip)" ] && [ -z "$(which easy_install)" ]; then
-      yum -y install python-setuptools
-      easy_install pip
-    elif [ -z "$(which pip)" ] && [ -n "$(which easy_install)" ]; then
-      easy_install pip
+    if [ -z "$(which pip3)" ] && [ -z "$(which easy_install)" ]; then
+      yum -y install python3-setuptools
+      easy_install pip3
+    elif [ -z "$(which pip3)" ] && [ -n "$(which easy_install)" ]; then
+      easy_install pip3
     fi
 
     # Install passlib for encrypt
@@ -118,14 +119,14 @@ if [ ! "$(which ansible-playbook)" ]; then
 
   elif [ -f /etc/fedora-release ]; then
     # Install required Python libs and pip
-    dnf -y install gcc libffi-devel openssl-devel python-devel
+    dnf -y install gcc libffi-devel openssl-devel python3-devel
 
     # If python-pip install failed and setuptools exists, try that
     if [ -z "$(which pip)" ] && [ -z "$(which easy_install)" ]; then
-      dng -y install python-setuptools
-      easy_install pip
+      dng -y install python3-setuptools
+      easy_install pip3
     elif [ -z "$(which pip)" ] && [ -n "$(which easy_install)" ]; then
-      easy_install pip
+      easy_install pip3
     fi
 
   else
